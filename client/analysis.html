@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Performance Analysis &amp; AI Insights</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111418",
+                        "surface-dark": "#283039",
+                        "surface-dark-highlight": "#3b4754",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Lexend', "Noto Sans", sans-serif;
+        }
+
+        /* Custom scrollbar for better dark mode look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #111418;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #283039;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4754;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-x-hidden">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
+        <!-- Top Navigation -->
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="w-full flex justify-center bg-[#111418] border-b border-[#283039]">
+                <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
+                    <header class="flex items-center justify-between whitespace-nowrap px-4 py-3 md:px-10">
+                        <div class="flex items-center gap-4 text-white">
+                            <div class="size-8 text-primary flex items-center justify-center">
+                                <span class="material-symbols-outlined text-3xl">analytics</span>
+                            </div>
+                            <h2 class="text-white text-lg font-bold leading-tight tracking-[-0.015em]">EdTech Analytics
+                            </h2>
+                        </div>
+                        <div class="hidden md:flex flex-1 justify-end gap-8">
+                            <div class="flex items-center gap-9">
+                                <a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors"
+                                    href="#">Dashboard</a>
+                                <a class="text-primary text-sm font-medium leading-normal" href="#">My Tests</a>
+                                <a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors"
+                                    href="#">Analytics</a>
+                                <a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors"
+                                    href="#">Study Material</a>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="size-10 rounded-full bg-surface-dark flex items-center justify-center text-white">
+                                    <span class="material-symbols-outlined">notifications</span>
+                                </div>
+                                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-surface-dark"
+                                    data-alt="User profile picture placeholder"
+                                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDlB_A_NjkJCOocgq1iV3h4p-ACg-fJkKA099ziUlYuCjbxmnP_nrFybljS6H4lPp0w9_KUGkx0K7a2eL3Xb_BLcsi4knWWJvY-IZj3SRh_1sNpnJ_i4fdAara4D5rqlq1JI_jug0RXv6vtBnazu9h7nqPB_CIjhUwzO8qFEzVn_Bk94bxyuFjsm82lhbmfk2v6GQRS8DnNT3e-Q4YwvKzVaB5vzlfkEGCoqVRT1V45j9LZfLCvW7ynfXEK-tNJs4ucrNITvNCmWXg");'>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Mobile Menu Icon -->
+                        <div class="md:hidden text-white">
+                            <span class="material-symbols-outlined">menu</span>
+                        </div>
+                    </header>
+                </div>
+            </div>
+            <div class="px-4 md:px-10 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col max-w-[1200px] flex-1 gap-6">
+                    <!-- Breadcrumbs -->
+                    <div class="flex flex-wrap gap-2 px-4 pt-4">
+                        <a class="text-[#9dabb9] text-base font-medium leading-normal hover:text-white"
+                            href="#">Home</a>
+                        <span class="text-[#9dabb9] text-base font-medium leading-normal">/</span>
+                        <a class="text-[#9dabb9] text-base font-medium leading-normal hover:text-white"
+                            href="#">Tests</a>
+                        <span class="text-[#9dabb9] text-base font-medium leading-normal">/</span>
+                        <span class="text-white text-base font-medium leading-normal">JEE Advanced Mock Test 4</span>
+                    </div>
+                    <!-- Page Heading -->
+                    <div class="flex flex-wrap justify-between gap-3 px-4">
+                        <div class="flex min-w-72 flex-col gap-2">
+                            <h1 class="text-white text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
+                                Performance Analysis: JEE Adv Mock 4</h1>
+                            <p
+                                class="text-[#9dabb9] text-sm md:text-base font-normal leading-normal flex items-center gap-2">
+                                <span class="material-symbols-outlined text-[18px]">calendar_today</span> Attempted on
+                                Oct 24, 2023
+                                <span class="mx-1">•</span>
+                                <span class="material-symbols-outlined text-[18px]">timer</span> Duration: 180 mins
+                            </p>
+                        </div>
+                        <button
+                            class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#283039] hover:bg-[#3b4754] transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em] gap-2 border border-[#3b4754]">
+                            <span class="material-symbols-outlined text-[18px]">download</span>
+                            <span class="truncate">Download Report</span>
+                        </button>
+                    </div>
+                    <!-- Stats Scorecard -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-4">
+                        <div
+                            class="flex flex-col gap-2 rounded-xl p-6 bg-[#283039] border border-[#3b4754] hover:border-primary/50 transition-colors">
+                            <div class="flex justify-between items-start">
+                                <p class="text-[#9dabb9] text-sm font-medium uppercase tracking-wider">Total Marks</p>
+                                <span class="material-symbols-outlined text-primary">assignment_turned_in</span>
+                            </div>
+                            <p class="text-white tracking-tight text-3xl font-bold leading-tight">185<span
+                                    class="text-[#9dabb9] text-xl font-medium">/300</span></p>
+                            <div class="flex items-center gap-1 text-[#0bda5b] text-sm font-medium">
+                                <span class="material-symbols-outlined text-sm">trending_up</span>
+                                <span>+15 marks vs last test</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col gap-2 rounded-xl p-6 bg-[#283039] border border-[#3b4754] hover:border-primary/50 transition-colors relative overflow-hidden">
+                            <!-- Subtle background highlight for key metric -->
+                            <div class="absolute right-0 top-0 h-20 w-20 bg-primary/10 rounded-bl-full -mr-4 -mt-4">
+                            </div>
+                            <div class="flex justify-between items-start relative z-10">
+                                <p class="text-[#9dabb9] text-sm font-medium uppercase tracking-wider">Percentile Rank
+                                </p>
+                                <span class="material-symbols-outlined text-primary">leaderboard</span>
+                            </div>
+                            <p class="text-white tracking-tight text-3xl font-bold leading-tight relative z-10">98.5</p>
+                            <div class="flex items-center gap-1 text-[#0bda5b] text-sm font-medium relative z-10">
+                                <span class="material-symbols-outlined text-sm">trending_up</span>
+                                <span>Top 1.5% of students</span>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col gap-2 rounded-xl p-6 bg-[#283039] border border-[#3b4754] hover:border-primary/50 transition-colors">
+                            <div class="flex justify-between items-start">
+                                <p class="text-[#9dabb9] text-sm font-medium uppercase tracking-wider">Accuracy Rate</p>
+                                <span class="material-symbols-outlined text-primary">check_circle</span>
+                            </div>
+                            <div class="flex items-end gap-2">
+                                <p class="text-white tracking-tight text-3xl font-bold leading-tight">82%</p>
+                                <div class="mb-1 w-full bg-[#1c2127] rounded-full h-1.5 max-w-[100px]">
+                                    <div class="bg-primary h-1.5 rounded-full" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-1 text-[#0bda5b] text-sm font-medium">
+                                <span class="material-symbols-outlined text-sm">trending_up</span>
+                                <span>+5% improvement</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- AI Insights Section -->
+                    <div class="px-4 py-6">
+                        <div
+                            class="rounded-2xl bg-gradient-to-br from-[#1c2127] to-[#161b22] border border-[#283039] p-6 md:p-8 flex flex-col gap-8 relative overflow-hidden">
+                            <!-- Decorative background element -->
+                            <div
+                                class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none">
+                            </div>
+                            <div
+                                class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 z-10">
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span
+                                            class="material-symbols-outlined text-primary animate-pulse">auto_awesome</span>
+                                        <h2 class="text-primary text-sm font-bold uppercase tracking-widest">AI
+                                            Generated Analysis</h2>
+                                    </div>
+                                    <h3 class="text-white text-2xl md:text-3xl font-bold leading-tight">AI Insights
+                                        &amp; Recommendations</h3>
+                                    <p class="text-[#9dabb9] text-base font-normal max-w-2xl">
+                                        Based on your recent performance, our AI has identified specific areas for
+                                        improvement. Focusing on these topics will boost your score by an estimated 15
+                                        marks.
+                                    </p>
+                                </div>
+                                <button
+                                    class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary hover:bg-primary/90 transition-colors text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary/20">
+                                    <span class="truncate">Practice Weak Areas</span>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 z-10">
+                                <!-- Insight Card 1 -->
+                                <div
+                                    class="flex gap-4 rounded-xl border border-[#3b4754] bg-[#202731] p-5 hover:bg-[#283039] transition-colors group">
+                                    <div
+                                        class="size-10 rounded-lg bg-red-500/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-red-500">science</span>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <h4 class="text-white text-base font-bold">Weakness in Org. Chemistry</h4>
+                                        <p class="text-[#9dabb9] text-sm leading-snug">Your accuracy in <span
+                                                class="text-white font-medium">Reaction Mechanisms</span> is 40%. Review
+                                            nucleophilic substitution.</p>
+                                    </div>
+                                </div>
+                                <!-- Insight Card 2 -->
+                                <div
+                                    class="flex gap-4 rounded-xl border border-[#3b4754] bg-[#202731] p-5 hover:bg-[#283039] transition-colors group">
+                                    <div
+                                        class="size-10 rounded-lg bg-yellow-500/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-yellow-500">timer_off</span>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <h4 class="text-white text-base font-bold">Time Management Alert</h4>
+                                        <p class="text-[#9dabb9] text-sm leading-snug">You spent <span
+                                                class="text-white font-medium">45% more time</span> than average on
+                                            Physics mechanics. Learn to skip tough Qs.</p>
+                                    </div>
+                                </div>
+                                <!-- Insight Card 3 -->
+                                <div
+                                    class="flex gap-4 rounded-xl border border-[#3b4754] bg-[#202731] p-5 hover:bg-[#283039] transition-colors group">
+                                    <div
+                                        class="size-10 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
+                                        <span class="material-symbols-outlined text-green-500">trending_up</span>
+                                    </div>
+                                    <div class="flex flex-col gap-1">
+                                        <h4 class="text-white text-base font-bold">Stronghold: Calculus</h4>
+                                        <p class="text-[#9dabb9] text-sm leading-snug">Excellent performance in <span
+                                                class="text-white font-medium">Differential Equations</span>. Keep
+                                            maintaining this accuracy.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Charts Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 px-4">
+                        <!-- Chart 1: Time Management -->
+                        <div class="rounded-xl border border-[#3b4754] bg-[#283039] p-6 flex flex-col gap-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-white text-lg font-bold">Time Spent vs Ideal Time</h3>
+                                <button class="text-primary text-sm font-medium hover:underline">View Details</button>
+                            </div>
+                            <div class="flex flex-col gap-4 h-64 justify-end pb-2">
+                                <div class="flex items-end justify-between h-full gap-2 md:gap-4 px-2">
+                                    <!-- Bar Group 1 -->
+                                    <div class="flex flex-col items-center gap-2 flex-1 group">
+                                        <div class="w-full flex justify-center items-end gap-1 h-full">
+                                            <div
+                                                class="w-2 md:w-3 bg-primary/40 h-[40%] rounded-t-sm group-hover:bg-primary/60 transition-colors">
+                                            </div> <!-- Ideal -->
+                                            <div
+                                                class="w-2 md:w-3 bg-red-400 h-[70%] rounded-t-sm group-hover:bg-red-500 transition-colors">
+                                            </div> <!-- Actual -->
+                                        </div>
+                                        <span class="text-[10px] md:text-xs text-[#9dabb9]">Q1-10</span>
+                                    </div>
+                                    <!-- Bar Group 2 -->
+                                    <div class="flex flex-col items-center gap-2 flex-1 group">
+                                        <div class="w-full flex justify-center items-end gap-1 h-full">
+                                            <div
+                                                class="w-2 md:w-3 bg-primary/40 h-[50%] rounded-t-sm group-hover:bg-primary/60 transition-colors">
+                                            </div>
+                                            <div
+                                                class="w-2 md:w-3 bg-green-400 h-[45%] rounded-t-sm group-hover:bg-green-500 transition-colors">
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px] md:text-xs text-[#9dabb9]">Q11-20</span>
+                                    </div>
+                                    <!-- Bar Group 3 -->
+                                    <div class="flex flex-col items-center gap-2 flex-1 group">
+                                        <div class="w-full flex justify-center items-end gap-1 h-full">
+                                            <div
+                                                class="w-2 md:w-3 bg-primary/40 h-[60%] rounded-t-sm group-hover:bg-primary/60 transition-colors">
+                                            </div>
+                                            <div
+                                                class="w-2 md:w-3 bg-primary h-[58%] rounded-t-sm group-hover:bg-primary/80 transition-colors">
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px] md:text-xs text-[#9dabb9]">Q21-30</span>
+                                    </div>
+                                    <!-- Bar Group 4 -->
+                                    <div class="flex flex-col items-center gap-2 flex-1 group">
+                                        <div class="w-full flex justify-center items-end gap-1 h-full">
+                                            <div
+                                                class="w-2 md:w-3 bg-primary/40 h-[45%] rounded-t-sm group-hover:bg-primary/60 transition-colors">
+                                            </div>
+                                            <div
+                                                class="w-2 md:w-3 bg-red-400 h-[85%] rounded-t-sm group-hover:bg-red-500 transition-colors">
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px] md:text-xs text-[#9dabb9]">Q31-40</span>
+                                    </div>
+                                    <!-- Bar Group 5 -->
+                                    <div class="flex flex-col items-center gap-2 flex-1 group">
+                                        <div class="w-full flex justify-center items-end gap-1 h-full">
+                                            <div
+                                                class="w-2 md:w-3 bg-primary/40 h-[55%] rounded-t-sm group-hover:bg-primary/60 transition-colors">
+                                            </div>
+                                            <div
+                                                class="w-2 md:w-3 bg-green-400 h-[50%] rounded-t-sm group-hover:bg-green-500 transition-colors">
+                                            </div>
+                                        </div>
+                                        <span class="text-[10px] md:text-xs text-[#9dabb9]">Q41-50</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-center gap-6 mt-2">
+                                    <div class="flex items-center gap-2">
+                                        <div class="size-3 bg-primary/40 rounded-sm"></div>
+                                        <span class="text-xs text-[#9dabb9]">Ideal Time</span>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="size-3 bg-primary rounded-sm"></div>
+                                        <span class="text-xs text-[#9dabb9]">Your Time</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chart 2: Performance Trend -->
+                        <div class="rounded-xl border border-[#3b4754] bg-[#283039] p-6 flex flex-col gap-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-white text-lg font-bold">Performance Trend (Last 5 Tests)</h3>
+                                <div class="flex gap-2">
+                                    <span
+                                        class="px-2 py-1 bg-primary/10 rounded text-xs text-primary font-medium">Physics</span>
+                                    <span
+                                        class="px-2 py-1 bg-[#3b4754] rounded text-xs text-[#9dabb9] font-medium">Math</span>
+                                </div>
+                            </div>
+                            <div class="relative h-64 flex items-end px-4 pb-6">
+                                <!-- Y-Axis Grid Lines -->
+                                <div class="absolute inset-0 flex flex-col justify-between pointer-events-none pb-6">
+                                    <div class="w-full h-px bg-[#3b4754]/50 border-t border-dashed border-[#3b4754]">
+                                    </div>
+                                    <div class="w-full h-px bg-[#3b4754]/50 border-t border-dashed border-[#3b4754]">
+                                    </div>
+                                    <div class="w-full h-px bg-[#3b4754]/50 border-t border-dashed border-[#3b4754]">
+                                    </div>
+                                    <div class="w-full h-px bg-[#3b4754]/50 border-t border-dashed border-[#3b4754]">
+                                    </div>
+                                    <div class="w-full h-px bg-[#3b4754]/50 border-t border-dashed border-[#3b4754]">
+                                    </div>
+                                </div>
+                                <!-- Line Chart SVG representation -->
+                                <svg class="absolute inset-0 w-full h-[calc(100%-1.5rem)] overflow-visible z-10"
+                                    preserveaspectratio="none">
+                                    <!-- Gradient Area -->
+                                    <path
+                                        d="M0,150 L0,120 L80,100 L160,130 L240,60 L320,40 L400,20 L480,30 L550,10 L550,150 Z"
+                                        fill="url(#gradient)" opacity="0.2"></path>
+                                    <defs>
+                                        <lineargradient id="gradient" x1="0%" x2="0%" y1="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#137fec;stop-opacity:1"></stop>
+                                            <stop offset="100%" style="stop-color:#137fec;stop-opacity:0"></stop>
+                                        </lineargradient>
+                                    </defs>
+                                    <!-- Line -->
+                                    <polyline fill="none" points="20,180 120,160 220,170 320,100 420,80 520,60"
+                                        stroke="#137fec" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                        vector-effect="non-scaling-stroke"></polyline>
+                                    <!-- Dots -->
+                                    <circle cx="20" cy="180" fill="#111418" r="4" stroke="#137fec" stroke-width="2">
+                                    </circle>
+                                    <circle cx="120" cy="160" fill="#111418" r="4" stroke="#137fec" stroke-width="2">
+                                    </circle>
+                                    <circle cx="220" cy="170" fill="#111418" r="4" stroke="#137fec" stroke-width="2">
+                                    </circle>
+                                    <circle cx="320" cy="100" fill="#111418" r="4" stroke="#137fec" stroke-width="2">
+                                    </circle>
+                                    <circle cx="420" cy="80" fill="#111418" r="4" stroke="#137fec" stroke-width="2">
+                                    </circle>
+                                    <circle cx="520" cy="60" fill="#137fec" r="6" stroke="#fff" stroke-width="2">
+                                    </circle>
+                                </svg>
+                                <!-- X-Axis Labels -->
+                                <div class="absolute bottom-0 w-full flex justify-between text-xs text-[#9dabb9] px-2">
+                                    <span>Test 1</span>
+                                    <span>Test 2</span>
+                                    <span>Test 3</span>
+                                    <span>Test 4</span>
+                                    <span class="text-white font-bold">Today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Question Deep Dive Section -->
+                    <div class="px-4 pb-10">
+                        <div
+                            class="flex flex-col gap-4 rounded-xl border border-[#3b4754] bg-[#283039] overflow-hidden">
+                            <div class="flex items-center justify-between p-6 border-b border-[#3b4754]">
+                                <h3 class="text-white text-lg font-bold">Question Analysis</h3>
+                                <div class="flex gap-3">
+                                    <button
+                                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1c2127] border border-[#3b4754] text-[#9dabb9] text-sm hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined text-[18px]">filter_list</span>
+                                        Filter
+                                    </button>
+                                    <button
+                                        class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1c2127] border border-[#3b4754] text-[#9dabb9] text-sm hover:text-white transition-colors">
+                                        <span class="material-symbols-outlined text-[18px]">download</span>
+                                        Export
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Table Header -->
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="bg-[#1c2127] border-b border-[#3b4754]">
+                                            <th class="p-4 text-xs font-medium uppercase tracking-wider text-[#9dabb9]">
+                                                Q. No</th>
+                                            <th class="p-4 text-xs font-medium uppercase tracking-wider text-[#9dabb9]">
+                                                Subject / Topic</th>
+                                            <th class="p-4 text-xs font-medium uppercase tracking-wider text-[#9dabb9]">
+                                                Status</th>
+                                            <th class="p-4 text-xs font-medium uppercase tracking-wider text-[#9dabb9]">
+                                                Time Spent</th>
+                                            <th class="p-4 text-xs font-medium uppercase tracking-wider text-[#9dabb9]">
+                                                Difficulty</th>
+                                            <th
+                                                class="p-4 text-xs font-medium uppercase tracking-wider text-[#9dabb9] text-right">
+                                                Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-[#3b4754]">
+                                        <!-- Row 1 -->
+                                        <tr class="hover:bg-[#323b46] transition-colors group">
+                                            <td class="p-4 text-white font-medium">01</td>
+                                            <td class="p-4">
+                                                <div class="flex flex-col">
+                                                    <span class="text-white text-sm font-medium">Physics</span>
+                                                    <span class="text-[#9dabb9] text-xs">Rotational Motion</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4">
+                                                <span
+                                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-500/10 text-red-500 text-xs font-bold border border-red-500/20">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                                                    Incorrect
+                                                </span>
+                                            </td>
+                                            <td class="p-4 text-white text-sm">145s <span
+                                                    class="text-red-400 text-xs ml-1">(+45s)</span></td>
+                                            <td class="p-4">
+                                                <div class="flex gap-0.5">
+                                                    <div class="w-3 h-1.5 bg-red-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-red-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-red-500 rounded-sm"></div>
+                                                    <span class="ml-2 text-xs text-[#9dabb9]">Hard</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4 text-right">
+                                                <button
+                                                    class="text-primary hover:text-white text-sm font-medium transition-colors">View
+                                                    Solution</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Row 2 -->
+                                        <tr class="hover:bg-[#323b46] transition-colors group">
+                                            <td class="p-4 text-white font-medium">02</td>
+                                            <td class="p-4">
+                                                <div class="flex flex-col">
+                                                    <span class="text-white text-sm font-medium">Chemistry</span>
+                                                    <span class="text-[#9dabb9] text-xs">Electrostatics</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4">
+                                                <span
+                                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold border border-green-500/20">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                    Correct
+                                                </span>
+                                            </td>
+                                            <td class="p-4 text-white text-sm">45s <span
+                                                    class="text-green-400 text-xs ml-1">(-10s)</span></td>
+                                            <td class="p-4">
+                                                <div class="flex gap-0.5">
+                                                    <div class="w-3 h-1.5 bg-yellow-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-yellow-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-[#3b4754] rounded-sm"></div>
+                                                    <span class="ml-2 text-xs text-[#9dabb9]">Medium</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4 text-right">
+                                                <button
+                                                    class="text-primary hover:text-white text-sm font-medium transition-colors">View
+                                                    Solution</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Row 3 -->
+                                        <tr class="hover:bg-[#323b46] transition-colors group">
+                                            <td class="p-4 text-white font-medium">03</td>
+                                            <td class="p-4">
+                                                <div class="flex flex-col">
+                                                    <span class="text-white text-sm font-medium">Maths</span>
+                                                    <span class="text-[#9dabb9] text-xs">Integration</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4">
+                                                <span
+                                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-500 text-xs font-bold border border-yellow-500/20">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-yellow-500"></span>
+                                                    Skipped
+                                                </span>
+                                            </td>
+                                            <td class="p-4 text-white text-sm">12s</td>
+                                            <td class="p-4">
+                                                <div class="flex gap-0.5">
+                                                    <div class="w-3 h-1.5 bg-red-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-red-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-red-500 rounded-sm"></div>
+                                                    <span class="ml-2 text-xs text-[#9dabb9]">Hard</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4 text-right">
+                                                <button
+                                                    class="text-primary hover:text-white text-sm font-medium transition-colors">View
+                                                    Solution</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Row 4 -->
+                                        <tr class="hover:bg-[#323b46] transition-colors group">
+                                            <td class="p-4 text-white font-medium">04</td>
+                                            <td class="p-4">
+                                                <div class="flex flex-col">
+                                                    <span class="text-white text-sm font-medium">Physics</span>
+                                                    <span class="text-[#9dabb9] text-xs">Kinematics</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4">
+                                                <span
+                                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 text-green-500 text-xs font-bold border border-green-500/20">
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                                                    Correct
+                                                </span>
+                                            </td>
+                                            <td class="p-4 text-white text-sm">52s</td>
+                                            <td class="p-4">
+                                                <div class="flex gap-0.5">
+                                                    <div class="w-3 h-1.5 bg-green-500 rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-[#3b4754] rounded-sm"></div>
+                                                    <div class="w-3 h-1.5 bg-[#3b4754] rounded-sm"></div>
+                                                    <span class="ml-2 text-xs text-[#9dabb9]">Easy</span>
+                                                </div>
+                                            </td>
+                                            <td class="p-4 text-right">
+                                                <button
+                                                    class="text-primary hover:text-white text-sm font-medium transition-colors">View
+                                                    Solution</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="p-4 border-t border-[#3b4754] flex justify-center">
+                                <button onclick="window.location.href='test-results.html'"
+                                    class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-secondary hover:bg-secondary/90 transition-all text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-secondary/25">
+                                    <span class="truncate">View Solutions</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="analysis-script.js"></script>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Test Results - Grind</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#161e27",
+                        "surface-card": "#1c252e",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        .math-serif {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <!-- Header -->
+    <header class="bg-white dark:bg-[#111418] border-b border-slate-200 dark:border-[#283039] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="size-8 bg-primary/10 rounded flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-xl">school</span>
+                </div>
+                <h1 class="text-lg font-bold">Test Results</h1>
+            </div>
+            <div class="flex items-center gap-3">
+                <button onclick="window.location.href='analysis.html'"
+                    class="px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-lg text-sm font-medium transition-colors">
+                    View Analysis
+                </button>
+                <button onclick="window.location.href='dashboard.html'"
+                    class="px-4 py-2 border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-medium transition-colors">
+                    Dashboard
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Score Card -->
+        <div class="bg-white dark:bg-[#1c252e] rounded-2xl border border-slate-200 dark:border-[#283039] p-8 mb-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-2">Test Completed! 🎉</h2>
+                <p class="text-slate-500 dark:text-slate-400">Here's your performance breakdown</p>
+            </div>
+
+            <!-- Score Overview -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="text-center p-6 bg-slate-50 dark:bg-[#161e27] rounded-xl">
+                    <div class="text-4xl font-bold text-primary mb-2" id="totalScore">0</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">Total Score</div>
+                </div>
+                <div class="text-center p-6 bg-green-50 dark:bg-green-900/10 rounded-xl border-2 border-green-200 dark:border-green-900/30">
+                    <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-2" id="correctCount">0</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">Correct</div>
+                </div>
+                <div class="text-center p-6 bg-red-50 dark:bg-red-900/10 rounded-xl border-2 border-red-200 dark:border-red-900/30">
+                    <div class="text-4xl font-bold text-red-600 dark:text-red-400 mb-2" id="incorrectCount">0</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">Incorrect</div>
+                </div>
+                <div class="text-center p-6 bg-slate-50 dark:bg-[#161e27] rounded-xl">
+                    <div class="text-4xl font-bold text-slate-600 dark:text-slate-400 mb-2" id="unattemptedCount">0</div>
+                    <div class="text-sm text-slate-500 dark:text-slate-400">Unattempted</div>
+                </div>
+            </div>
+
+            <!-- Accuracy & Time -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#161e27] rounded-xl">
+                    <span class="text-slate-600 dark:text-slate-400">Accuracy</span>
+                    <span class="font-bold text-lg" id="accuracy">0%</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#161e27] rounded-xl">
+                    <span class="text-slate-600 dark:text-slate-400">Time Taken</span>
+                    <span class="font-bold text-lg" id="timeTaken">0 min</span>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-[#161e27] rounded-xl">
+                    <span class="text-slate-600 dark:text-slate-400">Percentage</span>
+                    <span class="font-bold text-lg" id="percentage">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-xl font-bold">All Questions</h3>
+            <div class="flex gap-2">
+                <button onclick="filterQuestions('all')" 
+                    class="filter-btn active px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-primary text-white"
+                    data-filter="all">
+                    All
+                </button>
+                <button onclick="filterQuestions('correct')" 
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-slate-100 dark:bg-[#283039] text-slate-600 dark:text-slate-400"
+                    data-filter="correct">
+                    Correct
+                </button>
+                <button onclick="filterQuestions('incorrect')" 
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-slate-100 dark:bg-[#283039] text-slate-600 dark:text-slate-400"
+                    data-filter="incorrect">
+                    Incorrect
+                </button>
+                <button onclick="filterQuestions('unattempted')" 
+                    class="filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-slate-100 dark:bg-[#283039] text-slate-600 dark:text-slate-400"
+                    data-filter="unattempted">
+                    Unattempted
+                </button>
+            </div>
+        </div>
+
+        <!-- Questions List -->
+        <div class="space-y-4" id="questionsList">
+            <!-- Questions will be dynamically loaded here -->
+        </div>
+    </main>
+
+    <script>
+        // Load test results from localStorage
+        const testResults = JSON.parse(localStorage.getItem('testResults'));
+        let currentFilter = 'all';
+
+        if (!testResults) {
+            alert('No test results found. Please take a test first.');
+            window.location.href = 'dashboard.html';
+        } else {
+            displayResults();
+        }
+
+        function displayResults() {
+            // Update score cards
+            document.getElementById('totalScore').textContent = testResults.score;
+            document.getElementById('correctCount').textContent = testResults.correct;
+            document.getElementById('incorrectCount').textContent = testResults.incorrect;
+            document.getElementById('unattemptedCount').textContent = testResults.unattempted;
+            document.getElementById('accuracy').textContent = testResults.percentage + '%';
+            document.getElementById('percentage').textContent = testResults.percentage + '%';
+            document.getElementById('timeTaken').textContent = testResults.timeTakenMinutes + ' min';
+
+            // Display all questions
+            renderQuestions();
+        }
+
+        function renderQuestions() {
+            const questionsList = document.getElementById('questionsList');
+            questionsList.innerHTML = '';
+
+            testResults.results.forEach((result, index) => {
+                // Apply filter
+                if (currentFilter === 'correct' && !result.isCorrect) return;
+                if (currentFilter === 'incorrect' && (result.isCorrect || result.userAnswer === null)) return;
+                if (currentFilter === 'unattempted' && result.userAnswer !== null) return;
+
+                const questionCard = createQuestionCard(result, index);
+                questionsList.appendChild(questionCard);
+            });
+        }
+
+        function createQuestionCard(result, index) {
+            const div = document.createElement('div');
+            
+            // Determine status styling
+            let borderClass = 'border-slate-200 dark:border-[#283039]';
+            let statusBadge = '';
+            let statusIcon = '';
+            
+            if (result.userAnswer === null) {
+                statusBadge = '<span class="px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 rounded-full text-sm font-medium">Unattempted</span>';
+                statusIcon = '<span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>';
+            } else if (result.isCorrect) {
+                borderClass = 'border-green-500 dark:border-green-600';
+                statusBadge = '<span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full text-sm font-bold">Correct ✓</span>';
+                statusIcon = '<span class="material-symbols-outlined text-green-500">check_circle</span>';
+            } else {
+                borderClass = 'border-red-500 dark:border-red-600';
+                statusBadge = '<span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-full text-sm font-bold">Incorrect ✗</span>';
+                statusIcon = '<span class="material-symbols-outlined text-red-500">cancel</span>';
+            }
+
+            div.className = `bg-white dark:bg-[#1c252e] rounded-xl border-2 ${borderClass} p-6 cursor-pointer hover:shadow-lg transition-all transform hover:-translate-y-1`;
+            
+            div.onclick = () => viewSolution(index);
+
+            div.innerHTML = `
+                <div class="flex items-start justify-between gap-4">
+                    <div class="flex items-start gap-4 flex-1">
+                        <div class="mt-1">
+                            ${statusIcon}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-3">
+                                <h3 class="text-lg font-bold">Question ${index + 1}</h3>
+                                <span class="px-2 py-1 bg-slate-200 dark:bg-[#283039] text-xs font-semibold rounded">${result.subject || 'Physics'}</span>
+                                ${statusBadge}
+                            </div>
+                            <p class="text-slate-700 dark:text-slate-300 mb-4 line-clamp-2">
+                                ${result.question}
+                            </p>
+                            <div class="flex items-center gap-6 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-slate-500 dark:text-slate-400">Your Answer:</span>
+                                    <span class="font-bold ${result.userAnswer ? (result.isCorrect ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400') : 'text-slate-500'}">${result.userAnswer || 'Not Attempted'}</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-slate-500 dark:text-slate-400">Correct Answer:</span>
+                                    <span class="font-bold text-green-600 dark:text-green-400">${result.correctAnswer}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 text-primary">
+                        <span class="text-sm font-medium">View Solution</span>
+                        <span class="material-symbols-outlined">arrow_forward</span>
+                    </div>
+                </div>
+            `;
+
+            return div;
+        }
+
+        function viewSolution(questionIndex) {
+            // Store the question index and navigate to solution page
+            localStorage.setItem('currentQuestionIndex', questionIndex);
+            window.location.href = 'solution.html';
+        }
+
+        function filterQuestions(filter) {
+            currentFilter = filter;
+            
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.className = 'filter-btn active px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-primary text-white';
+                } else {
+                    btn.className = 'filter-btn px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-slate-100 dark:bg-[#283039] text-slate-600 dark:text-slate-400';
+                }
+            });
+            
+            // Re-render questions
+            renderQuestions();
+        }
+    </script>
+</body>
+
+</html>

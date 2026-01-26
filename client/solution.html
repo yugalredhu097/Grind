@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dual Solution &amp; AI Explanation View</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;family=Noto+Sans:wght@100..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Theme Configuration -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#1c2127",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for better look in dark mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #101922;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #283039;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3e4a56;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden min-h-screen flex flex-col">
+    <!-- Top Navigation -->
+    <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#e5e7eb] dark:border-b-[#283039] px-10 py-3 bg-surface-light dark:bg-[#111418] sticky top-0 z-50">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                <div class="size-8 flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-3xl">analytics</span>
+                </div>
+                <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">EdTech Analytics</h2>
+            </div>
+            <div class="hidden md:flex items-center gap-9">
+                <a class="text-slate-500 dark:text-[#9dabb9] text-sm font-medium hover:text-primary transition-colors"
+                    href="#">Dashboard</a>
+                <a class="text-slate-900 dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                    href="#">Question Bank</a>
+                <a class="text-slate-500 dark:text-[#9dabb9] text-sm font-medium hover:text-primary transition-colors"
+                    href="#">Analytics</a>
+                <a class="text-slate-500 dark:text-[#9dabb9] text-sm font-medium hover:text-primary transition-colors"
+                    href="#">Settings</a>
+            </div>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+            <label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+                <div
+                    class="flex w-full flex-1 items-stretch rounded-lg h-full border border-slate-200 dark:border-none">
+                    <div
+                        class="text-slate-400 dark:text-[#9dabb9] flex bg-white dark:bg-[#283039] items-center justify-center pl-4 rounded-l-lg">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <input
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-white dark:bg-[#283039] focus:border-none h-full placeholder:text-slate-400 dark:placeholder:text-[#9dabb9] px-4 pl-2 text-base font-normal leading-normal"
+                        placeholder="Search questions..." value="" />
+                </div>
+            </label>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200 dark:border-[#283039]"
+                data-alt="User profile avatar showing a smiling person"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBYDcq0xHX3sC7Ub7HxGm-60H7ig843-b_hSrz7yF2nSw5ua1Qyz2VgzoYXj_NPM6A6AnYLLtp92zVQn1ooDjtNKltuJJYXaap9MuqVRijutnjlc6u748m-MxZnOdx3X86rexPQf25wHBVYqm3ZgKP3V_IvgMqBBIWIAcHhuHhNc8OWa6Yha5Kt3_4XkQz4TSYox_AiAhqYtix1aLIiHRm1vfTB_yx4u17A8wpYOa7yjsVcTIRJrV0O0lpUxeHZJXm_ksvW-m0oE4s");'>
+            </div>
+        </div>
+    </header>
+    <main class="flex-1 flex justify-center py-6 px-4 md:px-10 lg:px-40">
+        <div class="flex flex-col max-w-[1200px] flex-1 gap-6">
+            <!-- Breadcrumbs & Heading -->
+            <div class="flex flex-col gap-2">
+                <div class="flex flex-wrap gap-2 items-center">
+                    <a class="text-slate-500 dark:text-[#9dabb9] text-sm font-medium hover:underline"
+                        href="#">Physics</a>
+                    <span class="text-slate-400 dark:text-[#9dabb9] text-sm">/</span>
+                    <a class="text-slate-500 dark:text-[#9dabb9] text-sm font-medium hover:underline"
+                        href="#">Mechanics</a>
+                    <span class="text-slate-400 dark:text-[#9dabb9] text-sm">/</span>
+                    <span class="text-slate-900 dark:text-white text-sm font-medium">Newton's Laws</span>
+                </div>
+                <div class="flex flex-wrap justify-between items-end gap-4">
+                    <div class="flex flex-col gap-1">
+                        <h1 class="text-slate-900 dark:text-white text-3xl font-bold leading-tight">Question #PHY-9920
+                        </h1>
+                        <p class="text-slate-500 dark:text-[#9dabb9] text-sm">Analyzed on Oct 24, 2023 • Attempted by
+                            45k students</p>
+                    </div>
+                    <button onclick="window.location.href='test-results.html'"
+                        class="flex items-center justify-center gap-2 rounded-lg h-10 px-6 bg-white dark:bg-[#283039] border border-slate-200 dark:border-none text-slate-900 dark:text-white text-sm font-medium hover:bg-slate-50 dark:hover:bg-[#343e4b] transition-colors">
+                        <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+                        <span>Back to Quiz</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Question Card -->
+            <section
+                class="bg-white dark:bg-surface-dark rounded-xl shadow-sm border border-slate-200 dark:border-transparent overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <!-- Image -->
+                    <div
+                        class="w-full md:w-1/3 bg-slate-100 dark:bg-[#151a21] flex items-center justify-center p-6 border-b md:border-b-0 md:border-r border-slate-200 dark:border-[#283039]">
+                        <div class="w-full aspect-video bg-contain bg-center bg-no-repeat rounded-lg"
+                            data-alt="Diagram showing a block of mass m on a wedge of mass M with forces labeled"
+                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLCbTI5ebCX7Qx60-03-pchRoOmXSjad87pwns_Ud6tJNRp5PiHPmxDjD_IQyYc7X6Pi16hHkGhveUF7SY1FLz6YwWUpk8wLGNn8B4PfADIMqylyIXe2H8uunEl015p6nkpdXE1jM3XWojR9_xYgDoTDmHgi7IKE9U5PnkFKlvmyvGG3L3F8JIGMqlhr4j01cwUgKg6rBQ3DTZ41ajOA00Q-9UQplMRISR6HnvwxcTRx-bUDhIsMGvh1rLAmpJmAwVkK2UnTeuhFU");'>
+                        </div>
+                    </div>
+                    <!-- Content -->
+                    <div class="w-full md:w-2/3 p-6 flex flex-col gap-4">
+                        <!-- Chips -->
+                        <div class="flex gap-2 flex-wrap">
+                            <div
+                                class="flex h-7 items-center gap-x-1.5 rounded-full bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 px-3">
+                                <span
+                                    class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[16px]">science</span>
+                                <p class="text-blue-700 dark:text-blue-400 text-xs font-semibold">Physics</p>
+                            </div>
+                            <div
+                                class="flex h-7 items-center gap-x-1.5 rounded-full bg-red-50 dark:bg-red-500/10 border border-red-100 dark:border-red-500/20 px-3">
+                                <span
+                                    class="material-symbols-outlined text-red-600 dark:text-red-400 text-[16px]">error</span>
+                                <p class="text-red-700 dark:text-red-400 text-xs font-semibold">Hard</p>
+                            </div>
+                            <div
+                                class="flex h-7 items-center gap-x-1.5 rounded-full bg-slate-100 dark:bg-[#283039] px-3">
+                                <span
+                                    class="material-symbols-outlined text-slate-500 dark:text-slate-400 text-[16px]">settings</span>
+                                <p class="text-slate-600 dark:text-slate-300 text-xs font-medium">Mechanics</p>
+                            </div>
+                        </div>
+                        <!-- Question Text -->
+                        <div class="prose dark:prose-invert max-w-none">
+                            <p class="text-lg font-medium leading-relaxed">
+                                A block of mass <em class="font-serif">m</em> is placed on a wedge of mass <em
+                                    class="font-serif">M</em>. The wedge is placed on a smooth horizontal surface. If
+                                the coefficient of friction between the block and the wedge is <em
+                                    class="font-serif">μ</em>, calculate the minimum horizontal acceleration <em
+                                    class="font-serif">a</em> required to keep the block stationary relative to the
+                                wedge.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Solution View Controls -->
+            <div class="flex items-center justify-between pt-2">
+                <h3 class="text-slate-900 dark:text-white text-xl font-bold">Solution Breakdown</h3>
+                <div class="bg-slate-100 dark:bg-[#283039] p-1 rounded-lg flex gap-1">
+                    <button
+                        class="px-4 py-1.5 rounded bg-white dark:bg-primary shadow-sm text-slate-900 dark:text-white text-sm font-medium transition-all">
+                        Side-by-Side
+                    </button>
+                    <button
+                        class="px-4 py-1.5 rounded hover:bg-slate-200 dark:hover:bg-[#343e4b] text-slate-500 dark:text-[#9dabb9] text-sm font-medium transition-all">
+                        Tabbed View
+                    </button>
+                </div>
+            </div>
+            <!-- Dual View Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                <!-- Left Column: Official Solution -->
+                <div
+                    class="bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-transparent p-6 shadow-sm flex flex-col gap-6">
+                    <div class="flex items-center gap-3 border-b border-slate-100 dark:border-[#283039] pb-4">
+                        <div class="bg-slate-100 dark:bg-[#283039] p-2 rounded-lg text-slate-600 dark:text-white">
+                            <span class="material-symbols-outlined">menu_book</span>
+                        </div>
+                        <h4 class="text-lg font-bold dark:text-white">Official Solution</h4>
+                    </div>
+                    <div class="flex flex-col gap-6 text-slate-700 dark:text-[#9dabb9]">
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center gap-1 min-w-[24px]">
+                                <span
+                                    class="bg-slate-100 dark:bg-[#283039] text-slate-900 dark:text-white text-xs font-bold size-6 flex items-center justify-center rounded-full">1</span>
+                                <div class="w-0.5 grow bg-slate-100 dark:bg-[#283039]"></div>
+                            </div>
+                            <div class="pb-2">
+                                <p class="text-sm font-bold text-slate-900 dark:text-white mb-1">Analyze Forces</p>
+                                <p class="text-sm leading-relaxed">
+                                    Consider the Free Body Diagram (FBD) of the block in the frame of the wedge. Since
+                                    the wedge is accelerating with <em class="font-serif">a</em>, a pseudo force <em
+                                        class="font-serif">ma</em> acts on the block towards the left.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center gap-1 min-w-[24px]">
+                                <span
+                                    class="bg-slate-100 dark:bg-[#283039] text-slate-900 dark:text-white text-xs font-bold size-6 flex items-center justify-center rounded-full">2</span>
+                                <div class="w-0.5 grow bg-slate-100 dark:bg-[#283039]"></div>
+                            </div>
+                            <div class="pb-2">
+                                <p class="text-sm font-bold text-slate-900 dark:text-white mb-1">Equilibrium Conditions
+                                </p>
+                                <p class="text-sm leading-relaxed mb-2">
+                                    For the block to be stationary relative to the wedge, forces parallel to the incline
+                                    must balance.
+                                </p>
+                                <div
+                                    class="bg-slate-50 dark:bg-[#111418] p-3 rounded text-center font-mono text-sm text-slate-800 dark:text-slate-200">
+                                    mg sin(θ) = ma cos(θ) + μN
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex flex-col items-center gap-1 min-w-[24px]">
+                                <span
+                                    class="bg-slate-100 dark:bg-[#283039] text-slate-900 dark:text-white text-xs font-bold size-6 flex items-center justify-center rounded-full">3</span>
+                            </div>
+                            <div class="pb-2">
+                                <p class="text-sm font-bold text-slate-900 dark:text-white mb-1">Solve for Acceleration
+                                </p>
+                                <p class="text-sm leading-relaxed">
+                                    Substituting normal force <em class="font-serif">N</em> and simplifying for minimum
+                                    acceleration.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Final Answer Box -->
+                        <div
+                            class="mt-2 bg-green-50 dark:bg-[#1b2e25] border border-green-200 dark:border-green-900/50 rounded-lg p-4">
+                            <p
+                                class="text-green-800 dark:text-green-400 text-xs font-bold uppercase tracking-wider mb-2">
+                                Final Answer</p>
+                            <p class="text-slate-900 dark:text-white font-serif text-lg">
+                                a = g ( <span class="italic">sinθ - μcosθ</span> ) / ( <span class="italic">cosθ +
+                                    μsinθ</span> )
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right Column: AI Explanation -->
+                <div
+                    class="relative bg-white dark:bg-surface-dark rounded-xl border border-slate-200 dark:border-transparent p-6 shadow-sm flex flex-col gap-6 overflow-hidden">
+                    <!-- Decorative subtle gradient -->
+                    <div
+                        class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
+                    </div>
+                    <div class="relative flex items-center gap-3 border-b border-slate-100 dark:border-[#283039] pb-4">
+                        <div class="bg-primary/10 p-2 rounded-lg text-primary">
+                            <span class="material-symbols-outlined">auto_awesome</span>
+                        </div>
+                        <h4 class="text-lg font-bold dark:text-white">AI Simplified Explanation</h4>
+                        <span
+                            class="ml-auto text-[10px] font-bold uppercase tracking-widest bg-primary/20 text-primary px-2 py-1 rounded">BETA</span>
+                    </div>
+                    <div class="relative flex flex-col gap-5">
+                        <!-- Core Concept -->
+                        <div class="p-4 rounded-lg bg-slate-50 dark:bg-[#283039] border-l-4 border-primary">
+                            <h5 class="text-slate-900 dark:text-white text-sm font-bold flex items-center gap-2 mb-1">
+                                <span class="material-symbols-outlined text-primary text-lg">lightbulb</span>
+                                Core Concept
+                            </h5>
+                            <p class="text-slate-600 dark:text-slate-300 text-sm">
+                                Friction isn't just resistance; here, it's a helping hand. The "pseudo-force" pushes the
+                                block <span class="font-bold text-slate-900 dark:text-white">up</span> the wedge,
+                                fighting gravity.
+                            </p>
+                        </div>
+                        <!-- Analogy -->
+                        <div class="flex gap-4 items-start">
+                            <div
+                                class="min-w-10 size-10 rounded-full bg-purple-50 dark:bg-[#2D1B36] flex items-center justify-center text-purple-600 dark:text-purple-400">
+                                <span class="material-symbols-outlined">directions_car</span>
+                            </div>
+                            <div>
+                                <h6 class="text-slate-900 dark:text-white font-bold text-sm mb-1">The "Bus Turn" Analogy
+                                </h6>
+                                <p class="text-slate-600 dark:text-[#9dabb9] text-sm leading-relaxed">
+                                    Imagine you're standing in a bus. When the bus accelerates forward rapidly, you feel
+                                    pushed backward. That "push" is what keeps the block pressed against the wedge
+                                    preventing it from sliding down.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Simplified Steps -->
+                        <div class="space-y-3">
+                            <h6 class="text-slate-900 dark:text-white font-bold text-sm">Key Takeaways:</h6>
+                            <ul class="space-y-2">
+                                <li class="flex gap-3 items-start">
+                                    <span
+                                        class="material-symbols-outlined text-green-500 text-[18px] mt-0.5">check_circle</span>
+                                    <span class="text-slate-600 dark:text-[#9dabb9] text-sm">Gravity wants to pull the
+                                        block <strong>down</strong>.</span>
+                                </li>
+                                <li class="flex gap-3 items-start">
+                                    <span
+                                        class="material-symbols-outlined text-green-500 text-[18px] mt-0.5">check_circle</span>
+                                    <span class="text-slate-600 dark:text-[#9dabb9] text-sm">The wedge's acceleration
+                                        pushes the block <strong>up</strong> (relative to wedge).</span>
+                                </li>
+                                <li class="flex gap-3 items-start">
+                                    <span
+                                        class="material-symbols-outlined text-green-500 text-[18px] mt-0.5">check_circle</span>
+                                    <span class="text-slate-600 dark:text-[#9dabb9] text-sm">Friction helps whichever
+                                        force is weaker to maintain balance.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer Action Bar -->
+            <div
+                class="mt-4 flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-lg bg-transparent border border-slate-200 dark:border-[#283039] border-dashed">
+                <div class="flex items-center gap-4">
+                    <p class="text-slate-500 dark:text-[#9dabb9] text-sm font-medium">Was this solution helpful?</p>
+                    <div class="flex gap-2">
+                        <button
+                            class="p-2 rounded hover:bg-slate-100 dark:hover:bg-[#283039] text-slate-400 dark:text-[#9dabb9] hover:text-green-500 transition-colors">
+                            <span class="material-symbols-outlined">thumb_up</span>
+                        </button>
+                        <button
+                            class="p-2 rounded hover:bg-slate-100 dark:hover:bg-[#283039] text-slate-400 dark:text-[#9dabb9] hover:text-red-500 transition-colors">
+                            <span class="material-symbols-outlined">thumb_down</span>
+                        </button>
+                    </div>
+                </div>
+                <button
+                    class="flex items-center gap-2 px-4 py-2 rounded text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 text-sm font-medium transition-colors">
+                    <span class="material-symbols-outlined text-[18px]">flag</span>
+                    Report Issue
+                </button>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
+<script src="solution-script.js"></script>
