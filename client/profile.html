@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>My Profile - Grind</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                        "surface-dark": "#161e27",
+                        "surface-card": "#1c252e",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+    <!-- Header -->
+    <header class="bg-white dark:bg-[#111418] border-b border-slate-200 dark:border-[#283039] sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="size-8 bg-primary/10 rounded flex items-center justify-center text-primary">
+                    <span class="material-symbols-outlined text-xl">person</span>
+                </div>
+                <h1 class="text-lg font-bold">My Profile</h1>
+            </div>
+            <button onclick="window.location.href='dashboard.html'"
+                class="px-4 py-2 border border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+                Back to Dashboard
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Profile Info -->
+            <div class="lg:col-span-1 space-y-6">
+                
+                <!-- Profile Card -->
+                <div class="bg-white dark:bg-[#1c252e] rounded-xl border border-slate-200 dark:border-[#283039] p-6">
+                    <div class="flex flex-col items-center">
+                        <!-- Profile Picture -->
+                        <div class="relative mb-4">
+                            <div class="size-32 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white text-4xl font-bold">
+                                <span id="profileInitial">S</span>
+                            </div>
+                            <button onclick="changeProfilePicture()"
+                                class="absolute bottom-0 right-0 size-10 bg-primary hover:bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg transition-colors">
+                                <span class="material-symbols-outlined text-lg">photo_camera</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Name & Email -->
+                        <h2 class="text-2xl font-bold mb-1" id="profileName">Student Name</h2>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4" id="profileEmail">student@example.com</p>
+                        
+                        <!-- Stats Grid -->
+                        <div class="w-full grid grid-cols-2 gap-4 mb-6">
+                            <div class="text-center p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg">
+                                <p class="text-2xl font-bold text-primary" id="profileTestsTaken">0</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Tests Taken</p>
+                            </div>
+                            <div class="text-center p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg">
+                                <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="profileAvgScore">0%</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Avg Score</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Edit Profile Button -->
+                        <button onclick="editProfile()"
+                            class="w-full py-3 bg-primary hover:bg-blue-600 text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-lg">edit</span>
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Account Info Card -->
+                <div class="bg-white dark:bg-[#1c252e] rounded-xl border border-slate-200 dark:border-[#283039] p-6">
+                    <h3 class="font-bold text-lg mb-4">Account Information</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Student ID</p>
+                            <p class="font-medium" id="studentId">JEE2024-001</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Batch</p>
+                            <p class="font-medium" id="studentBatch">JEE 2025 Batch</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Joined On</p>
+                            <p class="font-medium" id="joinedDate">Jan 15, 2024</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">Account Status</p>
+                            <span class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-full text-xs font-medium">
+                                <span class="size-1.5 rounded-full bg-green-500"></span>
+                                Active
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Performance & Activity -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- Performance Overview -->
+                <div class="bg-white dark:bg-[#1c252e] rounded-xl border border-slate-200 dark:border-[#283039] p-6">
+                    <h3 class="font-bold text-xl mb-6">Performance Overview</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-500 dark:text-slate-400">Total Questions</span>
+                                <span class="material-symbols-outlined text-primary text-xl">quiz</span>
+                            </div>
+                            <p class="text-2xl font-bold" id="totalQuestions">0</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-500 dark:text-slate-400">Accuracy</span>
+                                <span class="material-symbols-outlined text-green-600 text-xl">check_circle</span>
+                            </div>
+                            <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="overallAccuracy">0%</p>
+                        </div>
+                        <div class="p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-sm text-slate-500 dark:text-slate-400">Study Streak</span>
+                                <span class="material-symbols-outlined text-orange-500 text-xl">local_fire_department</span>
+                            </div>
+                            <p class="text-2xl font-bold text-orange-600 dark:text-orange-400" id="studyStreak">0 days</p>
+                        </div>
+                    </div>
+
+                    <!-- Subject-wise Performance -->
+                    <h4 class="font-bold mb-4">Subject-wise Performance</h4>
+                    <div class="space-y-4" id="subjectPerformance">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Recent Tests -->
+                <div class="bg-white dark:bg-[#1c252e] rounded-xl border border-slate-200 dark:border-[#283039] p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-xl">Recent Tests</h3>
+                        <button onclick="window.location.href='test-results.html'" 
+                            class="text-primary hover:text-blue-600 text-sm font-medium">
+                            View All →
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-3" id="recentTestsList">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Settings & Actions -->
+                <div class="bg-white dark:bg-[#1c252e] rounded-xl border border-slate-200 dark:border-[#283039] p-6">
+                    <h3 class="font-bold text-xl mb-4">Settings & Actions</h3>
+                    
+                    <div class="space-y-3">
+                        <button onclick="changePassword()"
+                            class="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-slate-500">lock</span>
+                                <span class="font-medium">Change Password</span>
+                            </div>
+                            <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                        </button>
+                        
+                        <button onclick="downloadReport()"
+                            class="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-slate-500">download</span>
+                                <span class="font-medium">Download Performance Report</span>
+                            </div>
+                            <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                        </button>
+                        
+                        <button onclick="clearHistory()"
+                            class="w-full flex items-center justify-between p-4 bg-slate-50 dark:bg-[#161e27] rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-red-500">delete</span>
+                                <span class="font-medium">Clear Test History</span>
+                            </div>
+                            <span class="material-symbols-outlined text-slate-400">chevron_right</span>
+                        </button>
+                        
+                        <button onclick="logout()"
+                            class="w-full flex items-center justify-between p-4 bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/30 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-red-600">logout</span>
+                                <span class="font-medium text-red-600 dark:text-red-400">Logout</span>
+                            </div>
+                            <span class="material-symbols-outlined text-red-400">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="profile-script.js"></script>
+</body>
+
+</html>
