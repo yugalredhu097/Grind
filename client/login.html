@@ -86,40 +86,62 @@
                         details to access the dashboard.</p>
                 </div>
                 <!-- Form Section -->
-                <form class="flex flex-col gap-5 w-full">
-                    <!-- Email Input -->
-                    <label class="flex flex-col w-full flex-1">
-                        <p class="text-[#111418] dark:text-white text-base font-medium leading-normal pb-2">Email or
-                            Username</p>
-                        <input
-                            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce0e5] dark:border-none bg-white dark:bg-[#283039] h-14 placeholder:text-[#637588] dark:placeholder:text-[#9dabb9] p-4 text-base font-normal leading-normal"
-                            placeholder="e.g. admin@institute.com" value="" />
-                    </label>
-                    <!-- Password Input -->
-                    <label class="flex flex-col w-full flex-1">
-                        <div class="flex justify-between items-baseline pb-2">
-                            <p class="text-[#111418] dark:text-white text-base font-medium leading-normal">Password</p>
-                            <a class="text-primary text-sm font-medium hover:text-primary/80 transition-colors"
-                                href="#">Forgot Password?</a>
-                        </div>
-                        <div
-                            class="flex w-full flex-1 items-stretch rounded-lg border border-[#dce0e5] dark:border-none bg-white dark:bg-[#283039] overflow-hidden focus-within:ring-2 focus-within:ring-primary/50">
-                            <input
-                                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-14 placeholder:text-[#637588] dark:placeholder:text-[#9dabb9] p-4 pr-2 text-base font-normal leading-normal"
-                                placeholder="Enter your password" type="password" value="" />
-                            <div
-                                class="text-[#637588] dark:text-[#9dabb9] flex border-none bg-transparent items-center justify-center pr-4 pl-2 cursor-pointer hover:text-primary transition-colors">
-                                <span class="material-symbols-outlined">visibility</span>
-                            </div>
-                        </div>
-                    </label>
-                    <!-- Sign In Button -->
-                    
-                    <div class="pt-2">
-                        <button id="signinBtn"
-                            class="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-5 bg-primary hover:bg-primary/90 text-white font-bold shadow-lg">
-                            Sign In
-                        </button>
+                <!-- Form Section -->
+<form class="flex flex-col gap-5 w-full" onsubmit="event.preventDefault(); handleLogin();">
+    <!-- Role Selection -->
+    <div class="flex flex-col gap-2">
+        <p class="text-[#111418] dark:text-white text-base font-medium leading-normal">Login As</p>
+        <div class="flex gap-4">
+            <label class="flex-1 cursor-pointer">
+                <input type="radio" name="role" value="student" class="peer sr-only" checked />
+                <div class="flex items-center justify-center gap-2 p-3 rounded-lg border-2 border-[#dce0e5] dark:border-[#283039] bg-white dark:bg-[#283039] peer-checked:border-primary peer-checked:bg-primary/10 transition-all">
+                    <span class="material-symbols-outlined text-xl peer-checked:text-primary">school</span>
+                    <span class="font-medium text-sm peer-checked:text-primary">Student</span>
+                </div>
+            </label>
+            <label class="flex-1 cursor-pointer">
+                <input type="radio" name="role" value="admin" class="peer sr-only" />
+                <div class="flex items-center justify-center gap-2 p-3 rounded-lg border-2 border-[#dce0e5] dark:border-[#283039] bg-white dark:bg-[#283039] peer-checked:border-primary peer-checked:bg-primary/10 transition-all">
+                    <span class="material-symbols-outlined text-xl peer-checked:text-primary">admin_panel_settings</span>
+                    <span class="font-medium text-sm peer-checked:text-primary">Admin</span>
+                </div>
+            </label>
+        </div>
+    </div>
+
+    <!-- Email Input -->
+    <label class="flex flex-col w-full flex-1">
+        <p class="text-[#111418] dark:text-white text-base font-medium leading-normal pb-2">Email or Username</p>
+        <input id="emailInput"
+            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#dce0e5] dark:border-none bg-white dark:bg-[#283039] h-14 placeholder:text-[#637588] dark:placeholder:text-[#9dabb9] p-4 text-base font-normal leading-normal"
+            placeholder="e.g. student@institute.com" value="" required />
+    </label>
+
+    <!-- Password Input -->
+    <label class="flex flex-col w-full flex-1">
+        <div class="flex justify-between items-baseline pb-2">
+            <p class="text-[#111418] dark:text-white text-base font-medium leading-normal">Password</p>
+            <a class="text-primary text-sm font-medium hover:text-primary/80 transition-colors" href="#">Forgot Password?</a>
+        </div>
+        <div class="flex w-full flex-1 items-stretch rounded-lg border border-[#dce0e5] dark:border-none bg-white dark:bg-[#283039] overflow-hidden focus-within:ring-2 focus-within:ring-primary/50">
+            <input id="passwordInput"
+                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-14 placeholder:text-[#637588] dark:placeholder:text-[#9dabb9] p-4 pr-2 text-base font-normal leading-normal"
+                placeholder="Enter your password" type="password" value="" required />
+            <div onclick="togglePassword()"
+                class="text-[#637588] dark:text-[#9dabb9] flex border-none bg-transparent items-center justify-center pr-4 pl-2 cursor-pointer hover:text-primary transition-colors">
+                <span class="material-symbols-outlined" id="passwordIcon">visibility</span>
+            </div>
+        </div>
+    </label>
+
+    <!-- Sign In Button -->
+    <div class="pt-2">
+        <button type="submit"
+            class="flex w-full cursor-pointer items-center justify-center rounded-lg h-12 px-5 bg-primary hover:bg-primary/90 text-white font-bold shadow-lg transition-all">
+            Sign In
+        </button>
+    </div>
+</form>
 
                         <script>
                             // Add JS directly here for testing
@@ -147,13 +169,67 @@
         </div>
     </div>
     <script>
-        // Make sure the JS runs after the button exists
-        const signinBtn = document.getElementById('signinBtn');
+        // Toggle password visibility
+    function togglePassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordIcon = document.getElementById('passwordIcon');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            passwordIcon.textContent = 'visibility_off';
+        } else {
+            passwordInput.type = 'password';
+            passwordIcon.textContent = 'visibility';
+        }
+    }
 
-        signinBtn.addEventListener('click', () => {
-            console.log("Sign In clicked"); // Debug line
-            window.location.href = 'dashboard.html'; // Navigate to dashboard
-        });
+    // Handle login
+    function handleLogin() {
+        const email = document.getElementById('emailInput').value.trim();
+        const password = document.getElementById('passwordInput').value;
+        const role = document.querySelector('input[name="role"]:checked').value;
+        
+        // Basic validation
+        if (!email || !password) {
+            alert('Please fill in all fields');
+            return;
+        }
+        
+        // Extract username from email
+        const username = email.split('@')[0];
+        const capitalizedUsername = username.charAt(0).toUpperCase() + username.slice(1);
+        
+        // Save to localStorage
+        localStorage.setItem('userName', capitalizedUsername);
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userRole', role);
+        localStorage.setItem('isLoggedIn', 'true');
+        
+        console.log(`✅ Login successful: ${capitalizedUsername} (${role})`);
+        
+        // Redirect based on role
+        if (role === 'admin') {
+            window.location.href = 'admin-dashboard.html';
+        } else {
+            window.location.href = 'dashboard.html';
+        }
+    }
+    
+    // Check if already logged in
+    window.addEventListener('DOMContentLoaded', () => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const role = localStorage.getItem('userRole');
+        
+        if (isLoggedIn === 'true') {
+            // Auto-redirect if already logged in
+            if (role === 'admin') {
+                // Uncomment if you want auto-redirect
+                // window.location.href = 'admin-dashboard.html';
+            } else {
+                // window.location.href = 'dashboard.html';
+            }
+        }
+    });
     </script>
 
 </body>
